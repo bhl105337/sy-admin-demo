@@ -11,7 +11,7 @@ var md5 = crypto.createHash('md5');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var game  = require('./routes/game');
-var admins = require('./routes/admins');
+var admin = require('./routes/admin');
 var store = require('./routes/store');
 var news = require('./routes/news');
 var h5 = require('./routes/h5');
@@ -23,15 +23,14 @@ var adminStrategy=require("./routes/adminStrategy");
 var app = express();
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers","X-Requested-With,content-type");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With,content-type");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
     res.header("X-Powered-By",' 3.2.1');
     res.header("Content-Type", "application/json;charset=utf-8");
-   //res.header("Content-Type", "text/html");
     next();
 });
 // view engine setup
-// app.set('views', path.join(__dirname, '/views'));
+// app.set('views', path.join(__dirname, 'botSup/html/'));
 // app.set('view engine', 'html');
 // app.engine('.html', require('ejs').__express);
 // app.set('view engine', 'html');
@@ -44,14 +43,14 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'views')));
+app.use(express.static(path.join(__dirname, 'resource')));
 // app.use(express.bodyParser());
 
 app.use('/', index);
 app.use("/game",game);
 app.use('/users',users);
 app.use('/page',page);
-app.use('/admin',admins);
+app.use('/admin',admin);
 app.use('/store',store);
 app.use("/news",news);
 app.use("/h5",h5);
@@ -84,8 +83,8 @@ function haltOnTimedout (req, res, next) {
     if (!req.timedout) next()
 }
 
-// app.listen(8080,()=>{
-//     console.log("8080");
-// });
+app.listen(9800,()=>{
+    console.log("9800");
+});
 
 module.exports = app;
